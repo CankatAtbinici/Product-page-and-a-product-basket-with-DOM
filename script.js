@@ -4,6 +4,9 @@ link.href = 'style.css';
 link.rel = 'stylesheet';
 link.type = 'text/css';
 
+
+
+// productsDataSet
 let cart = []
 var products2 = [
     { id: 0, name: "Ürün 1", price: 10 , image:src = "resimler/cerrahi1.jpg", style:"width:50px"}, { id: 1, name: "Ürün 2", price: 20 , image:src = 'resimler/cerrahi2.jpg'}, { id: 2, name: "Ürün 3", price: 30 , image:src = "resimler/cerrahi3.jpg"} ,
@@ -11,6 +14,7 @@ var products2 = [
 ]
 
 
+//someButtons defined
 let increaseCountButton;
 let decreaseCountButton;
 let addToCartButton;
@@ -18,14 +22,11 @@ let removeFromCartButton;
 
 (function (){
     renderProductCards()
-
 })()
 
 
-
+//  a forEach loop adding datas to card so if we add new products this function creat new cards automatically 
 function renderProductCards() {
-
-// resmi objecte ekledik ama cart içerisinde yok.
     products2.forEach((product, index) => {
         document.getElementById("productCartsContainer").innerHTML += `
             <div class="ProductCards">
@@ -47,10 +48,8 @@ function renderProductCards() {
     removeFromCartButton = document.getElementsByClassName("removeFromCartButton");
 }
 
-
-
+// a forEach loop adds items to chart
 function renderChart(){
-    console.log("cart in render chart: " , cart)
     document.getElementById("listitem").innerHTML = ""
     cart.forEach((product, index) => {
         const selectedChartItem = getProductFromChart(product.id)
@@ -71,7 +70,6 @@ function renderChart(){
     })
     
 
-    console.log("getTotalPrice in renderChart : " , getTotalPrice())
     document.getElementById("cartSummary").innerHTML = `
     <p> Sepet Tutarı : 
         <span> ${getTotalPrice().toString()} </span> TL
@@ -84,14 +82,12 @@ function renderChart(){
 }
 
 function azalt() {
-
     var sonuc = document.getElementById("sonuc");
     sonuc.value = Number(sonuc.value) - 1;
 
 }
 
-//SEPET
-
+// when click charts button if displays "none" will be "block" but if opposite the this status they will be "none"
 function mytoggle() {
     var x = document.getElementById("shoppingcard");
     if (x.style.display === "none") {
@@ -101,16 +97,18 @@ function mytoggle() {
     }
 }
 
+//this function adds product to chart
 function addToCart(product) {
-    console.log("add to chart func : ", product)
     cart.push(product)
-    console.log("after push chart : ", cart)
     renderChart()
 }
 
+
+
+//this for loops travels all addToCardButton elements and if "card id" === "target.name" works "renderChart" function
+
 for (let i = 0; i < addToCartButton.length; i++) {
     addToCartButton[i].addEventListener("click", function (e) {
-        console.log("add chart event : ", e)
         let selectedProduct;
         for(let i = 0;i < cart.length ; i++){
             if( cart[i].id == e.target.name){
@@ -118,7 +116,7 @@ for (let i = 0; i < addToCartButton.length; i++) {
                 renderChart()
                 return
             }
-        }
+        } //
         for(let i = 0;i < products2.length ; i++){
             if( products2[i].id == e.target.name){
                 selectedProduct = products2[i] ;
@@ -128,6 +126,8 @@ for (let i = 0; i < addToCartButton.length; i++) {
     })
 }
 
+
+// we need a loop to delete items from chart. This for loops do that
 for (let i = 0; i < removeFromCartButton.length; i++) {
     removeFromCartButton[i].addEventListener("click", function (e) {
         console.log("add chart event : ", e)
@@ -145,6 +145,8 @@ for (let i = 0; i < removeFromCartButton.length; i++) {
     })
 }
 
+
+//this for loop travels around all card items and works if find someone === e.target.name +
 function cartButtonsAddEventListener(){
     for (let i = 0; i < increaseCountButton.length; i++) {
         increaseCountButton[i].addEventListener("click", function (e) {
@@ -166,7 +168,7 @@ function cartButtonsAddEventListener(){
         })
     }
     
-    
+    //this for loop travels around all card items and works if find someone === e.target.name -
     for (let i = 0; i < decreaseCountButton.length; i++) {
         decreaseCountButton[i].addEventListener("click", function (e) {
             console.log("decreaseCountButton event : ", e)
@@ -186,8 +188,10 @@ function cartButtonsAddEventListener(){
     } 
 }
 
+
+    
 function getProductById(productId){
-    let selectedProduct
+    let selectedProduct;
     for(let i = 0;i < products2.length ; i++){
         if( products2[i].id == productId){
             selectedProduct = products2[i] ;
